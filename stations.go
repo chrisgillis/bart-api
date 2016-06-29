@@ -2,7 +2,7 @@ package bart
 
 type StationInfoService struct{}
 
-func (s *StationInfoService) Stations(r *StationInfoRequest) (resp StationInfoResponse, err error) {
+func (s *StationInfoService) Stations(r *StationListRequest) (resp StationListResponse, err error) {
 	err = makeRequest("stn.aspx", "stns", r, &resp)
 	return
 }
@@ -12,9 +12,14 @@ func (s *StationInfoService) StationAccess(r *StationAccessRequest) (resp Statio
 	return
 }
 
-type StationInfoRequest struct{}
+func (s *StationInfoService) StationInfo(r *StationInfoRequest) (resp StationInfoResponse, err error) {
+	err = makeRequest("stn.aspx", "stninfo", r, &resp)
+	return
+}
 
-type StationInfoResponse struct {
+type StationListRequest struct{}
+
+type StationListResponse struct {
 	BartResponseMeta
 	Stations []Station `xml:"stations>station"`
 }
@@ -59,4 +64,27 @@ type StationAccess struct {
 	BikeStationText string `xml:"bike_station_text"`
 	Destinations    string `xml:"destinations"`
 	TransitInfo     string `xml:"transit_info"`
+}
+
+type StationInfoRequest struct {
+	Origin string `url:"orig"`
+}
+
+type StationInfoResponse struct {
+	BartResponseMeta
+	Station StationDetail `xml:"stations>station"`
+}
+
+type StationDetail struct {
+	Station
+	NorthRoutes    []string `xml:"north_routes>route"`
+	SouthRoutes    []string `xml:"south_routes>route"`
+	NorthPlatforms []string `xml:"north_platforms>platform"`
+	SouthPlatforms []string `xml:"south_platforms>platform"`
+	PlatformInfo   string   `xml:"platform_info"`
+	Intro          string   `xml:"intro"`
+	CrossStreet    string   `xml:"cross_street"`
+	Food           string   `xml:"food"`
+	Shopping       string   `xml:"shopping"`
+	Attraction     string   `xml:"attraction"`
 }
