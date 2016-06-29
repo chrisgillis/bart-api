@@ -14,8 +14,9 @@ const (
 )
 
 type BartClient struct {
-	Advisories  *AdvisoryService
-	StationInfo *StationInfoService
+	Advisories        *AdvisoryService
+	StationInfo       *StationInfoService
+	RealTimeEstimates *RealTimeEstimateService
 }
 
 type BartResponseMeta struct {
@@ -33,9 +34,9 @@ func makeRequest(endpoint string, command string, requestParams interface{}, res
 	v, _ := query.Values(requestParams)
 	v.Add(cmdParam, command)
 	v.Add(keyParam, bartApiKey)
+
 	values := v.Encode()
 	url := baseEndpointUrl + endpoint + "?" + values
-
 	resp, err := http.Get(url)
 	if err != nil {
 		return err
