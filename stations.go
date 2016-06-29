@@ -17,6 +17,11 @@ func (s *StationInfoService) StationInfo(r *StationInfoRequest) (resp StationInf
 	return
 }
 
+func (s *StationInfoService) Help(r *HelpRequest) (resp HelpResponse, err error) {
+	err = makeRequest("stn.aspx", "help", r, &resp)
+	return
+}
+
 type StationListRequest struct{}
 
 type StationListResponse struct {
