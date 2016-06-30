@@ -3,7 +3,7 @@ A Golang package for the BART API. Currently supports Advisories, Station Info, 
 
 # Usage
 ```
-        bartClient := bart.New()
+	bartClient := bart.New()
 
 	bsaResp, _ := bartClient.Advisories.Bsa(&bart.BsaRequest{Orig: "all"})
 	fmt.Printf("Advisories.Bsa = %#v\n\n", bsaResp)
